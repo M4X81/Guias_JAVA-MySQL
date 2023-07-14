@@ -16,7 +16,7 @@ import tienda.persistence.ProductoDao;
 public class ProductoService {
     
     private ProductoDao dao;
-
+  
     public ProductoService() {
         this.dao = new ProductoDao();
     }

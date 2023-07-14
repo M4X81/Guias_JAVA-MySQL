@@ -35,6 +35,7 @@ h) Editar un producto con datos a elección.
  */
 package tienda;
 
+import javax.swing.JOptionPane;
 import tienda.service.FabricanteService;
 import tienda.service.ProductoService;
 
@@ -45,10 +46,12 @@ import tienda.service.ProductoService;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
+        formFabricante_Producto fp = new formFabricante_Producto();
+        fp.setVisible(true);
         FabricanteService fS = new FabricanteService();
         ProductoService pS = new ProductoService();
         pS.listarProducto();
+        JOptionPane.showMessageDialog(null, "La conexión se ha realizado exitosamente...");
         fS.listarFabricante();
     
    

@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +25,16 @@ public abstract class DAO {
     private final String DATABASE = "tienda";
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     
+    /* este metodo lo creo para poder probar el form*/
+    
+    public static Connection getConnection() throws SQLException {
+    String url = "jdbc:mysql://localhost:3306/tienda?useSSL=false";
+    String username = "root";
+    String password = "M4xi198!";
+    return DriverManager.getConnection(url, username, password);
+}
+
+    
     protected void conectarBase() throws ClassNotFoundException, SQLException{
         try {
             
@@ -31,6 +42,7 @@ public abstract class DAO {
             String urlBaseDeDatos = "jdbc:mysql://localhost:3306/"+ DATABASE +"?useSSL=false";
             conexion= DriverManager.getConnection(urlBaseDeDatos, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al conectarse a la base de datos: " + e.toString());
             throw e;
         }
     }

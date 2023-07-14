@@ -6,6 +6,7 @@ package tienda.persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.swing.JTextField;
 import tienda.entity.Fabricante;
 
 /**
@@ -28,7 +29,7 @@ public final class FabricanteDao extends DAO {
             throw e;
         }
     }
-
+    
     public void modificarFabricante(Fabricante fabricante) throws Exception {
         try {
             if (fabricante == null) {

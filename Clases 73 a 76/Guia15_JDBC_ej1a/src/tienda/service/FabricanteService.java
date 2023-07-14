@@ -32,6 +32,8 @@ public class FabricanteService {
             throw e;
         }
     }
+    
+  
 
     public void eliminarUsuario(int codigo) throws Exception {
 
