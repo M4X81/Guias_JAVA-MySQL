@@ -106,13 +106,15 @@ public final class FabricanteDao extends DAO {
     }
     
     public Collection<Fabricante> listarFabricantes() throws Exception {
+         Collection<Fabricante> fabricantes = new ArrayList();
+         
         try {
             String sql = "SELECT codigo, nombre FROM Fabricante ";
 
             consultarBase(sql);
 
             Fabricante fabricante = null;
-            Collection<Fabricante> fabricantes = new ArrayList();
+           
             while (resultado.next()) {
                 fabricante = new Fabricante();
                 fabricante.setCodigo(resultado.getInt(1));
@@ -120,12 +122,17 @@ public final class FabricanteDao extends DAO {
                 fabricantes.add(fabricante);
             }
             desconectarBase();
-            return fabricantes;
+           
         } catch (Exception e) {
             e.printStackTrace();
             desconectarBase();
             throw new Exception("Error de sistema");
         }
+        for (Fabricante fabricante : fabricantes) {
+            System.out.println(fabricante.getCodigo() + " _ " + fabricante.getNombre());
+        }
+        
+        return fabricantes;
     }
 }
 

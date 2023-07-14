@@ -35,7 +35,6 @@ h) Editar un producto con datos a elección.
  */
 package tienda;
 
-import tienda.persistence.ProductoDao;
 import tienda.service.FabricanteService;
 import tienda.service.ProductoService;
 
@@ -49,9 +48,8 @@ public class Main {
 
         FabricanteService fS = new FabricanteService();
         ProductoService pS = new ProductoService();
-        ProductoDao pd = new ProductoDao();
         pS.listarProducto();
-      
+        fS.listarFabricante();
     
    
 /*
