@@ -4,6 +4,10 @@
  */
 package tienda.persistence;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import tienda.entity.Fabricante;
@@ -76,6 +80,26 @@ public final class ProductoDao extends DAO {
             desconectarBase();
         }
     }
+
+    public boolean existeProducto(int codigoProducto) throws Exception {
+        Connection connection = DAO.getConnection();
+    boolean existe = false;
+    try {
+        String sql = "SELECT COUNT(*) FROM Producto WHERE codigo = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, codigoProducto);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            int count = resultSet.getInt(1);
+            existe = count > 0;
+        }
+        resultSet.close();
+        statement.close();
+    } catch (SQLException e) {
+        throw e;
+    }
+    return existe;
+}
 
     /*
     public Producto buscarProductoPorCodigo(int codigo) throws Exception {

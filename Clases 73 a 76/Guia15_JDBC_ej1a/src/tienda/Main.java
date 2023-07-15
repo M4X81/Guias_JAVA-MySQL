@@ -63,7 +63,7 @@ public class Main {
         JOptionPane.showMessageDialog(null, "La conexión se ha realizado exitosamente...");
         try {
             int opcion = 0;
-            
+
             do {
 
                 System.out.println("     Bienvenido a MercadoBarrani  ");
@@ -229,33 +229,43 @@ public class Main {
                         System.out.println(" ");
                         break;
 
-                    case 8:               
+                    case 8:
                             try {
                         System.out.println("Ingrese el código del producto a modificar: ");
                         int codigoProducto = input.nextInt();
                         input.nextLine();
 
-                        System.out.println("Ingrese el nuevo nombre del producto: ");
-                        String nuevoNombre = input.nextLine();
-                                if (nuevoNombre == null) {
-                                    continue;
-                                }
+                        if (!p1.existeProducto(codigoProducto)) {
+                            System.out.println("El producto no existe en la base de datos.");
+                            break;
+                        }
 
-                        System.out.println("Ingrese el nuevo precio del producto: ");
+                        System.out.println("Ingrese el nuevo nombre del producto");
+                        String nuevoNombre = input.nextLine().trim();
+
+                        System.out.println("Ingrese el nuevo precio del producto");
                         double nuevoPrecio = input.nextDouble();
                         input.nextLine();
-                                if (nuevoPrecio == 0) {
-                                    continue;  
-                                }
 
-                        System.out.println("Ingrese el nuevo código del fabricante: ");
+                        System.out.println("Ingrese el nuevo código del fabricante ");
                         int nuevoCodigoFabricante = input.nextInt();
+                        input.nextLine();
 
                         Producto productoModificado = new Producto();
                         productoModificado.setCodigo(codigoProducto);
-                        productoModificado.setNombre(nuevoNombre);
-                        productoModificado.setPrecio(nuevoPrecio);
-                        productoModificado.setCodigoFabricante(nuevoCodigoFabricante);
+
+                        if (!nuevoNombre.isEmpty()) {
+                            productoModificado.setNombre(nuevoNombre);
+                        }
+
+                        if (nuevoPrecio != 0) {
+                            productoModificado.setPrecio(nuevoPrecio);
+                        }
+
+                        if (nuevoCodigoFabricante != 0) {
+                            productoModificado.setCodigoFabricante(nuevoCodigoFabricante);
+                        }
+
                         p1.modificarProducto(productoModificado);
                         System.out.println("El producto ha sido modificado exitosamente.");
 
@@ -272,7 +282,7 @@ public class Main {
                         fs.listarFabricante();
                         break;
                 }
-              
+
             } while (opcion != 0);
 
         } catch (Exception e) {
