@@ -56,7 +56,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner input = new Scanner(System.in).useDelimiter("\n");
         ProductoDao p1 = new ProductoDao();
-        //formFabricante_Producto fp = new formFabricante_Producto();
+        formFabricante_Producto fp = new formFabricante_Producto();
         Connection connection = DAO.getConnection();
         FabricanteService fs = new FabricanteService();
         ProductoService ps = new ProductoService();
