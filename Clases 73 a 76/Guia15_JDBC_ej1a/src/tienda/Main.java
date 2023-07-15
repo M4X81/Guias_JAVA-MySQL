@@ -35,7 +35,15 @@ h) Editar un producto con datos a elección.
  */
 package tienda;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
+import tienda.entity.Producto;
+import tienda.persistence.DAO;
+import tienda.persistence.ProductoDao;
 import tienda.service.FabricanteService;
 import tienda.service.ProductoService;
 
@@ -46,16 +54,234 @@ import tienda.service.ProductoService;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        formFabricante_Producto fp = new formFabricante_Producto();
-        fp.setVisible(true);
-        FabricanteService fS = new FabricanteService();
-        ProductoService pS = new ProductoService();
-        pS.listarProducto();
+        Scanner input = new Scanner(System.in).useDelimiter("\n");
+        ProductoDao p1 = new ProductoDao();
+        //formFabricante_Producto fp = new formFabricante_Producto();
+        Connection connection = DAO.getConnection();
+        FabricanteService fs = new FabricanteService();
+        ProductoService ps = new ProductoService();
         JOptionPane.showMessageDialog(null, "La conexión se ha realizado exitosamente...");
-        fS.listarFabricante();
-    
-   
-/*
+        try {
+            int opcion = 0;
+
+            do {
+
+                System.out.println("     Bienvenido a MercadoBarrani  ");
+                System.out.println("--------------------------------------");
+                System.out.println("                 MENÚ                 ");
+                System.out.println("--------------------------------------");
+                System.out.println("1-Lista el nombre de todos los productos que hay en la tabla producto. ");
+                System.out.println("2-Lista los nombres y los precios de todos los productos de la tabla producto. ");
+                System.out.println("3-Listar aquellos productos que su precio esté entre 120 y 202. ");
+                System.out.println("4-Buscar y listar todos los Portátiles de la tabla producto. ");
+                System.out.println("5-Listar el nombre y el precio del producto más barato.");
+                System.out.println("6-Ingresar un producto a la base de datos.");
+                System.out.println("7-Ingresar un fabricante a la base de datos.");
+                System.out.println("8-Editar un producto con datos a elección.");
+                System.out.println("9-Mostrar productos.");
+                System.out.println("10-Mostrar fabricantes.");
+                System.out.println("0-Salir");
+                System.out.println("Ingrese su consulta");
+                System.out.println(" ");
+                System.out.println("--------------------------------------");
+
+                opcion = input.nextInt();
+
+                switch (opcion) {
+                    case 1:
+                    try {
+                        String sql = "SELECT nombre FROM Producto;";
+                        Statement st = connection.createStatement();
+                        ResultSet resultSet = st.executeQuery(sql);
+
+                        while (resultSet.next()) {
+                            String nombre = resultSet.getString("nombre");
+                            System.out.println(nombre);
+                        }
+
+                        resultSet.close();
+                        st.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println(" ");
+                    break;
+                    case 2:
+                        try {
+                        String sql = "SELECT nombre, precio FROM Producto;";
+                        Statement st = connection.createStatement();
+                        ResultSet resultSet = st.executeQuery(sql);
+
+                        while (resultSet.next()) {
+                            String nombre = resultSet.getString("nombre");
+                            double precio = resultSet.getDouble("precio");
+                            System.out.println("Nombre: " + nombre + ", Precio: " + precio);
+                        }
+
+                        resultSet.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
+                    case 3:
+                            try {
+                        String sql = "SELECT nombre, precio FROM Producto where precio between 120 and 202;";
+                        Statement st = connection.createStatement();
+                        ResultSet resultSet = st.executeQuery(sql);
+
+                        while (resultSet.next()) {
+                            String nombre = resultSet.getString("nombre");
+                            double precio = resultSet.getDouble("precio");
+                            System.out.println("Nombre: " + nombre + ", Precio: " + precio);
+                        }
+
+                        resultSet.close();
+                        st.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
+                    case 4:
+                                try {
+                        String sql = "SELECT nombre, precio FROM Producto where nombre like ('%portatil%');";
+                        Statement st = connection.createStatement();
+                        ResultSet resultSet = st.executeQuery(sql);
+
+                        while (resultSet.next()) {
+                            String nombre = resultSet.getString("nombre");
+                            double precio = resultSet.getDouble("precio");
+                            System.out.println("Nombre: " + nombre + ", Precio: " + precio);
+                        }
+
+                        resultSet.close();
+                        st.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
+                    case 5:
+                            try {
+                        String sql = "SELECT nombre, precio FROM Producto order by precio\n"
+                                + "limit 1;";
+                        Statement st = connection.createStatement();
+                        ResultSet resultSet = st.executeQuery(sql);
+
+                        while (resultSet.next()) {
+                            String nombre = resultSet.getString("nombre");
+                            double precio = resultSet.getDouble("precio");
+                            System.out.println("Nombre: " + nombre + ", Precio: " + precio);
+                        }
+
+                        resultSet.close();
+                        st.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
+                    case 6:
+
+                        System.out.println("Ingrese el nombre del producto: ");
+                        String nombre = input.next();
+                        System.out.println("Ingrese el precio del producto: ");
+                        double precio = input.nextDouble();
+                        System.out.println("Ingrese el código del fabricante: ");
+                        int codigoFabricante = input.nextInt();
+
+                        try {
+                            String sql = "INSERT INTO Producto (nombre, precio, codigo_fabricante) VALUES (?, ?, ?)";
+                            PreparedStatement pstmt = connection.prepareStatement(sql);
+                            pstmt.setString(1, nombre);
+                            pstmt.setDouble(2, precio);
+                            pstmt.setInt(3, codigoFabricante);
+                            pstmt.executeUpdate();
+
+                            System.out.println("El producto ha sido guardado exitosamente.");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(" ");
+                        break;
+
+                    case 7:
+                        System.out.println("Ingrese el nombre del fabricante: ");
+                        String nombreF = input.next();
+
+                        try {
+                            String sql = "INSERT INTO Fabricante (nombre) VALUES (?)";
+                            PreparedStatement pstmt = connection.prepareStatement(sql);
+                            pstmt.setString(1, nombreF);
+                            pstmt.executeUpdate();
+
+                            System.out.println("El fabricante ha sido guardado exitosamente.");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(" ");
+                        break;
+
+                    case 8:
+                 
+                            try {
+                        System.out.println("Ingrese el código del producto a modificar: ");
+                        int codigoProducto = input.nextInt();
+                        input.nextLine();
+
+                        System.out.println("Ingrese el nuevo nombre del producto: ");
+                        String nuevoNombre = input.nextLine();
+                                if (nuevoNombre == null) {
+                                    continue;
+                                }
+
+                        System.out.println("Ingrese el nuevo precio del producto: ");
+                        double nuevoPrecio = input.nextDouble();
+                        input.nextLine();
+                                if (nuevoPrecio == 0) {
+                                    continue;  
+                                }
+
+                        System.out.println("Ingrese el nuevo código del fabricante: ");
+                        int nuevoCodigoFabricante = input.nextInt();
+
+                        Producto productoModificado = new Producto();
+                        productoModificado.setCodigo(codigoProducto);
+                        productoModificado.setNombre(nuevoNombre);
+                        productoModificado.setPrecio(nuevoPrecio);
+                        productoModificado.setCodigoFabricante(nuevoCodigoFabricante);
+                        p1.modificarProducto(productoModificado);
+                        System.out.println("El producto ha sido modificado exitosamente.");
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
+
+                    case 9:
+                        ps.listarProducto();
+                        break;
+                    case 10:
+                        fs.listarFabricante();
+                        break;
+
+                }
+
+                // fs.listarFabricante();
+            } while (opcion != 0);
+
+        } catch (Exception e) {
+        }
+
+        /*
         try {
             //Creamos  usuarios
             usuarioService.crearUsuario("fiorde@hotmail.com", "fiorde14");
@@ -96,7 +322,7 @@ public class Main {
             e.printStackTrace();
             System.out.println("Error del sistema por \n" + e.getMessage());
         }
-    */
+         */
     }
 
 }
