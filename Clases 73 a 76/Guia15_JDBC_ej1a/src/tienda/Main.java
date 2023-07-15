@@ -63,7 +63,7 @@ public class Main {
         JOptionPane.showMessageDialog(null, "La conexión se ha realizado exitosamente...");
         try {
             int opcion = 0;
-
+            
             do {
 
                 System.out.println("     Bienvenido a MercadoBarrani  ");
@@ -229,8 +229,7 @@ public class Main {
                         System.out.println(" ");
                         break;
 
-                    case 8:
-                 
+                    case 8:               
                             try {
                         System.out.println("Ingrese el código del producto a modificar: ");
                         int codigoProducto = input.nextInt();
@@ -272,57 +271,12 @@ public class Main {
                     case 10:
                         fs.listarFabricante();
                         break;
-
                 }
-
-                // fs.listarFabricante();
+              
             } while (opcion != 0);
 
         } catch (Exception e) {
         }
-
-        /*
-        try {
-            //Creamos  usuarios
-            usuarioService.crearUsuario("fiorde@hotmail.com", "fiorde14");
-            usuarioService.crearUsuario("tincho@hotmail.com", "eggprogramacion");
-            usuarioService.imprimirUsuarios();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error del sistema por \n" + e.getMessage());
-        }
-
-        try {
-            //Modificamos un usuario
-            usuarioService.modificarClaveUsuario("fiorde@hotmail.com", "fiorde14", "fiorde15");
-            usuarioService.imprimirUsuarios();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error del sistema por \n" + e.getMessage());
-        }
-
-        try {
-            //Eliminamos un usuario
-            usuarioService.eliminarUsuario("fiorde@hotmail.com");
-            usuarioService.imprimirUsuarios();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error del sistema por \n" + e.getMessage());
-        }
-
-        try {
-            //Buscamos el Usuario por correo
-            Usuario usuario = usuarioService.buscarUsuarioPorCorreoElectronico("tincho@hotmail.com");
-            //Creamos Mascota con el Usuario anterior
-            mascotaService.crearMascota("Chiquito", "Beagle", usuario);
-
-            //Mostramos Mascota con su Usuario
-            mascotaService.imprimirMascotas();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error del sistema por \n" + e.getMessage());
-        }
-         */
     }
 
 }
