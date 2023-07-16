@@ -26,7 +26,7 @@ public class ProductoService {
     public void crearProducto(int codigo, String nombre, double precio,int codigoFabricante, Fabricante fabricante) throws Exception {
 
         try {
-            //Validamos
+
             if (nombre == null || nombre.trim().isEmpty()) {
                 throw new Exception("Debe indicar el nombre");
             }
@@ -87,7 +87,6 @@ public class ProductoService {
 
         try {
 
-            //Validamos 
             if (codigo < 0) {
                 throw new Exception("Debe indicar el Id");
             }
@@ -101,12 +100,11 @@ public class ProductoService {
 
         try {
 
-            //Validamos
             if (codigo < 0) {
                 throw new Exception("Debe indicar el id");
             }
             Producto producto = dao.buscarProductoPorCodigo(codigo);
-            //Verificamos
+        
             if (producto == null) {
                 throw new Exception("No se econtró mascota para el correo electrónico indicado");
             }
@@ -132,11 +130,8 @@ public class ProductoService {
     public void imprimirProductos() throws Exception {
 
         try {
-
-            //Listamos los mascotas
             Collection<Producto> producto = listarProducto();
 
-            //Imprimimos los mascotas
             if (producto.isEmpty()) {
                 throw new Exception("No existen productos para imprimir");
             } else {

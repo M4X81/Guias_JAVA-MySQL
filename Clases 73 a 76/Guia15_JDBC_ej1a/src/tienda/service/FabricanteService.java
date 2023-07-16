@@ -14,37 +14,20 @@ import tienda.persistence.FabricanteDao;
  * @author Max
  */
 public class FabricanteService {
-     private FabricanteDao dao;
+
+    private FabricanteDao dao;
 
     public FabricanteService() {
         this.dao = new FabricanteDao();
     }
-    
+
     public void crearFabricante(int codigo, String nombre, Producto producto) throws Exception {
 
-        try { 
-            //Creamos el usuario
+        try {
             Fabricante fabricante = new Fabricante();
             fabricante.setCodigo(codigo);
             fabricante.setNombre(nombre);
             dao.guardarFabricante(fabricante);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-    
-  
-
-    public void eliminarUsuario(int codigo) throws Exception {
-
-        try {
-
-            //Validamos 
-            if (codigo == 0) {
-                throw new Exception("Debe indicar el codigo");
-            }
-
-            dao.eliminarFabricante(codigo);
         } catch (Exception e) {
             throw e;
         }
@@ -54,9 +37,8 @@ public class FabricanteService {
 
         try {
 
-            //Validamos
             if (nombre == null || nombre.trim().isEmpty()) {
-                throw new Exception("Debe indicar el correo electrónico");
+                throw new Exception("Debe indicar el nombre");
             }
 
             Fabricante fabricante = dao.buscarFabricantePorNombre(nombre);
@@ -71,11 +53,10 @@ public class FabricanteService {
 
         try {
 
-           /* //Validamos
+            /* //Validamos
             if (codigo == null) {
                 throw new Exception("Debe indicar el id");
             }*/
-
             Fabricante fabricante = dao.buscarFabricantePorCodigo(codigo);
 
             return fabricante;
@@ -91,26 +72,6 @@ public class FabricanteService {
             Collection<Fabricante> fabricantes = dao.listarFabricantes();
 
             return fabricantes;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public void imprimirFabricantes() throws Exception {
-
-        try {
-
-            //Listamos los usuarios
-            Collection<Fabricante> fabricantes = listarFabricante();
-
-            //Imprimimos los usuarios
-            if (fabricantes.isEmpty()) {
-                throw new Exception("No existen usuarios para imprimir");
-            } else {
-                for (Fabricante f : fabricantes) {
-                    System.out.println(f);
-                }
-            }
         } catch (Exception e) {
             throw e;
         }

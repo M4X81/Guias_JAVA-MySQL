@@ -4,18 +4,17 @@
  */
 package tienda;
 
-import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import tienda.entity.Fabricante;
 import tienda.entity.Producto;
 import tienda.persistence.DAO;
+import tienda.persistence.FabricanteDao;
+import tienda.service.FabricanteService;
 import tienda.service.ProductoService;
 
 /**
@@ -30,8 +29,6 @@ public class formFabricante_Producto extends javax.swing.JFrame {
     private void initDatabaseOperations() {
         try {
             Connection connection = DAO.getConnection();
-            // Utiliza la conexión para realizar las operaciones necesarias en la base de datos
-            // Puedes llamar a métodos de tu clase DAO para ejecutar consultas, actualizar registros, etc.
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,10 +37,12 @@ public class formFabricante_Producto extends javax.swing.JFrame {
     public formFabricante_Producto() throws SQLException {
         initComponents();
         initDatabaseOperations();
-        Fabricante fabricante = new Fabricante();
-        fabricante.mostrarFabricantes(jTablaPpal);
+       
 
     }
+      FabricanteDao dao = new FabricanteDao();
+
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,6 +105,11 @@ public class formFabricante_Producto extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -207,7 +211,7 @@ public class formFabricante_Producto extends javax.swing.JFrame {
             tbTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tbTablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                 .addContainerGap())
@@ -378,6 +382,16 @@ public class formFabricante_Producto extends javax.swing.JFrame {
     }
      
     }//GEN-LAST:event_btnVerProdActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        FabricanteService fs = new FabricanteService();
+        try {
+            dao.eliminarFabricante(Integer.parseInt(txtCodigo.getText()));          
+        } catch (Exception ex) {
+            Logger.getLogger(formFabricante_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

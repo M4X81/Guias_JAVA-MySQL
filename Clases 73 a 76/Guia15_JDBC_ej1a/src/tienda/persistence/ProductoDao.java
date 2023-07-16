@@ -10,8 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import tienda.Main;
 import tienda.entity.Fabricante;
 import tienda.entity.Producto;
+import tienda.formFabricante_Producto;
 import tienda.service.FabricanteService;
 
 /**
@@ -20,12 +24,6 @@ import tienda.service.FabricanteService;
  */
 public final class ProductoDao extends DAO {
 
-    //private final FabricanteService fabricanteService;
-    /*
-    public ProductoDao() {
-        this.fabricanteService = new FabricanteService();
-    }
-     */
     private final FabricanteService fabricanteService;
 
     public ProductoDao() {
@@ -73,6 +71,7 @@ public final class ProductoDao extends DAO {
     public void eliminarProducto(int codigo) throws Exception {
         try {
             String sql = "DELETE FROM Producto WHERE codigo = " + codigo + "";
+            existeProducto(codigo);
             insertarModificarEliminar(sql);
         } catch (Exception e) {
             throw e;
@@ -184,5 +183,15 @@ public Collection<Producto> listarProductos() throws Exception {
     return productos;
 }
 
-
+      public static void ejecutarFormulario() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new formFabricante_Producto().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
 }

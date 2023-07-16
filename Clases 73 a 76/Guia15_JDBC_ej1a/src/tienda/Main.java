@@ -38,8 +38,11 @@ package tienda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tienda.entity.Producto;
 import tienda.persistence.DAO;
@@ -61,11 +64,12 @@ public class Main {
         FabricanteService fs = new FabricanteService();
         ProductoService ps = new ProductoService();
         JOptionPane.showMessageDialog(null, "La conexión se ha realizado exitosamente...");
+
         try {
             int opcion = 0;
 
             do {
-
+                System.out.println(" ");
                 System.out.println("     Bienvenido a MercadoBarrani  ");
                 System.out.println("--------------------------------------");
                 System.out.println("                 MENÚ                 ");
@@ -80,12 +84,14 @@ public class Main {
                 System.out.println("8-Editar un producto con datos a elección.");
                 System.out.println("9-Mostrar productos.");
                 System.out.println("10-Mostrar fabricantes.");
+                System.out.println("11-Mostrar formulario(Tocar como ultima opcion xq no se como volver al menú...");
                 System.out.println("0-Salir");
                 System.out.println("Ingrese su consulta");
                 System.out.println(" ");
                 System.out.println("--------------------------------------");
 
                 opcion = input.nextInt();
+                input.nextLine();
 
                 switch (opcion) {
                     case 1:
@@ -178,16 +184,16 @@ public class Main {
                             String nombre = resultSet.getString("nombre");
                             double precio = resultSet.getDouble("precio");
                             System.out.println("Nombre: " + nombre + ", Precio: " + precio);
-                        }
+                            }
 
-                        resultSet.close();
-                        st.close();
+                            resultSet.close();
+                            st.close();
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(" ");
-                    break;
+                         } catch (Exception e) {
+                           e.printStackTrace();
+                         }
+                            System.out.println(" ");
+                         break;
                     case 6:
 
                         System.out.println("Ingrese el nombre del producto: ");
@@ -269,11 +275,11 @@ public class Main {
                         p1.modificarProducto(productoModificado);
                         System.out.println("El producto ha sido modificado exitosamente.");
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(" ");
-                    break;
+                        } catch (Exception e) {
+                          e.printStackTrace();
+                        }
+                        System.out.println(" ");
+                        break;
 
                     case 9:
                         ps.listarProducto();
@@ -281,12 +287,15 @@ public class Main {
                     case 10:
                         fs.listarFabricante();
                         break;
+                    case 11:
+                        p1.ejecutarFormulario();
+                        break;
                 }
 
             } while (opcion != 0);
 
         } catch (Exception e) {
+            System.err.println(e);
         }
     }
-
 }

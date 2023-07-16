@@ -22,13 +22,13 @@ public abstract class DAO {
     
     private final String USER ="root";
     private final String PASSWORD = "M4xi198!";
-    private final String DATABASE = "tienda";
+    private final String DATABASE = "Guia15_JDBC_extra_ej1_tienda";
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     
     /* este metodo lo creo para poder probar el form*/
     
     public static Connection getConnection() throws SQLException {
-    String url = "jdbc:mysql://localhost:3306/tienda?useSSL=false";
+    String url = "jdbc:mysql://localhost:3306/Guia15_JDBC_extra_ej1_tienda?useSSL=false";
     String username = "root";
     String password = "M4xi198!";
     return DriverManager.getConnection(url, username, password);
