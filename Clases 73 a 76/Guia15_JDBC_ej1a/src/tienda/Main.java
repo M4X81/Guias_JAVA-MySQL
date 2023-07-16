@@ -44,6 +44,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import tienda.entity.Producto;
 import tienda.persistence.DAO;
 import tienda.persistence.ProductoDao;
@@ -57,16 +58,18 @@ import tienda.service.ProductoService;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Scanner input = new Scanner(System.in).useDelimiter("\n");
+        Scanner input = new Scanner(System.in).useDelimiter("\n");       
         ProductoDao p1 = new ProductoDao();
+        //este es para iniciar el formulario
         formFabricante_Producto fp = new formFabricante_Producto();
+        //----------------------------------
         Connection connection = DAO.getConnection();
         FabricanteService fs = new FabricanteService();
         ProductoService ps = new ProductoService();
         JOptionPane.showMessageDialog(null, "La conexión se ha realizado exitosamente...");
 
         try {
-            int opcion = 0;
+            String opcion;
 
             do {
                 System.out.println(" ");
@@ -90,11 +93,10 @@ public class Main {
                 System.out.println(" ");
                 System.out.println("--------------------------------------");
 
-                opcion = input.nextInt();
-                input.nextLine();
+                opcion = input.nextLine();
 
                 switch (opcion) {
-                    case 1:
+                    case "1":
                     try {
                         String sql = "SELECT nombre FROM Producto;";
                         Statement st = connection.createStatement();
@@ -114,7 +116,7 @@ public class Main {
 
                     System.out.println(" ");
                     break;
-                    case 2:
+                    case "2":
                         try {
                         String sql = "SELECT nombre, precio FROM Producto;";
                         Statement st = connection.createStatement();
@@ -133,7 +135,7 @@ public class Main {
                     }
                     System.out.println(" ");
                     break;
-                    case 3:
+                    case "3":
                             try {
                         String sql = "SELECT nombre, precio FROM Producto where precio between 120 and 202;";
                         Statement st = connection.createStatement();
@@ -153,7 +155,7 @@ public class Main {
                     }
                     System.out.println(" ");
                     break;
-                    case 4:
+                    case "4":
                                 try {
                         String sql = "SELECT nombre, precio FROM Producto where nombre like ('%portatil%');";
                         Statement st = connection.createStatement();
@@ -173,7 +175,7 @@ public class Main {
                     }
                     System.out.println(" ");
                     break;
-                    case 5:
+                    case "5":
                             try {
                         String sql = "SELECT nombre, precio FROM Producto order by precio\n"
                                 + "limit 1;";
@@ -184,17 +186,17 @@ public class Main {
                             String nombre = resultSet.getString("nombre");
                             double precio = resultSet.getDouble("precio");
                             System.out.println("Nombre: " + nombre + ", Precio: " + precio);
-                            }
+                        }
 
-                            resultSet.close();
-                            st.close();
+                        resultSet.close();
+                        st.close();
 
-                         } catch (Exception e) {
-                           e.printStackTrace();
-                         }
-                            System.out.println(" ");
-                         break;
-                    case 6:
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
+                    case "6":
 
                         System.out.println("Ingrese el nombre del producto: ");
                         String nombre = input.next();
@@ -218,7 +220,7 @@ public class Main {
                         System.out.println(" ");
                         break;
 
-                    case 7:
+                    case "7":
                         System.out.println("Ingrese el nombre del fabricante: ");
                         String nombreF = input.next();
 
@@ -235,7 +237,7 @@ public class Main {
                         System.out.println(" ");
                         break;
 
-                    case 8:
+                    case "8":
                             try {
                         System.out.println("Ingrese el código del producto a modificar: ");
                         int codigoProducto = input.nextInt();
@@ -275,24 +277,31 @@ public class Main {
                         p1.modificarProducto(productoModificado);
                         System.out.println("El producto ha sido modificado exitosamente.");
 
-                        } catch (Exception e) {
-                          e.printStackTrace();
-                        }
-                        System.out.println(" ");
-                        break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(" ");
+                    break;
 
-                    case 9:
+                    case "9":
                         ps.listarProducto();
                         break;
-                    case 10:
+                    case "10":
                         fs.listarFabricante();
                         break;
-                    case 11:
+                    case "11":
                         p1.ejecutarFormulario();
                         break;
                 }
+               
+            } while (!opcion.equals("0"));
 
-            } while (opcion != 0);
+            //estas lineas son para cerrar la ejecucion del formulario que queda en segundo plano
+            
+            SwingUtilities.invokeLater(() -> {
+                fp.dispose();         
+                System.exit(0);
+            });
 
         } catch (Exception e) {
             System.err.println(e);
