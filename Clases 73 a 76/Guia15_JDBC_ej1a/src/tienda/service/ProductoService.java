@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+
  */
 package tienda.service;
 
@@ -39,7 +38,6 @@ public class ProductoService {
                 throw new Exception("Debe indicar codigo de fabricante");
             }
 
-            //Creamos el producto
             Producto producto = new Producto();
             producto.setCodigo(codigo);
             producto.setNombre(nombre);
@@ -51,37 +49,6 @@ public class ProductoService {
             throw e;
         }
     }
-/*
-    public void modificarClaveMascota(int id, String apodo, String raza, int idUsuario) throws Exception {
-
-        try {
-
-            //Validamos
-            if (id > 0) {
-                throw new Exception("Debe indicar el id");
-            }
-
-            if (apodo == null || apodo.trim().isEmpty()) {
-                throw new Exception("Debe indicar el apodo");
-            }
-
-            if (raza == null || raza.trim().isEmpty()) {
-                throw new Exception("Debe indicar la raza");
-            }
-
-            if (idUsuario < 0) {
-                throw new Exception("Debe indicar el Usuario");
-            }
-
-            //Buscamos
-            Producto mascota = buscarMascotaPorId(id);
-
-            dao.modificarMascota(mascota);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-*/
 
     public void eliminarProducto(int codigo) throws Exception {
 
@@ -114,9 +81,7 @@ public class ProductoService {
             throw e;
         }
     }
-    
-    
-
+     
     public Collection<Producto> listarProducto() throws Exception {
 
         try {

@@ -338,7 +338,7 @@ public class formFabricante_Producto extends javax.swing.JFrame {
     private void btnMostrarFabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarFabActionPerformed
         Fabricante f = new Fabricante();
         try {
-            f.mostrarFabricantes(jTablaPpal);
+            dao.mostrarFabricantes(jTablaPpal);
         } catch (SQLException ex) {
             Logger.getLogger(formFabricante_Producto.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -346,9 +346,9 @@ public class formFabricante_Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarFabActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        Fabricante fabricante = new Fabricante();
+
         try {
-            fabricante.insertarFabricante(txtCodigo, txtNombre);
+            dao.insertarFabricante(txtCodigo, txtNombre);
         } catch (SQLException ex) {
             Logger.getLogger(formFabricante_Producto.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -78,10 +78,19 @@ para tener un mejor rendimiento
  */
 package estancia;
 
+import estancia.persistence.DAO;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author Max
  */
 public class Main {
-    
+    public static void main(String[] args) throws SQLException {
+        Connection con = DAO.getConnection();
+        
+        
+        
+    }
 }
