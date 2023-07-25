@@ -21,7 +21,7 @@ public abstract class DAO {
     protected Statement sentencia = null;
     
     private final String USER ="root";
-    private final String PASSWORD = "M4xi198!";
+    private final String PASSWORD = "root";
     private final String DATABASE = "Guia15_JDBC_extra_ej1_tienda";
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     
@@ -30,7 +30,7 @@ public abstract class DAO {
     public static Connection getConnection() throws SQLException {
     String url = "jdbc:mysql://localhost:3306/Guia15_JDBC_extra_ej1_tienda?useSSL=false";
     String username = "root";
-    String password = "M4xi198!";
+    String password = "root";
     return DriverManager.getConnection(url, username, password);
 }
 

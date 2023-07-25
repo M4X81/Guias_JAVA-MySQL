@@ -61,7 +61,7 @@ public class Main {
         Scanner input = new Scanner(System.in).useDelimiter("\n");       
         ProductoDao p1 = new ProductoDao();
         //este es para iniciar el formulario
-        formFabricante_Producto fp = new formFabricante_Producto();
+       formFabricante_Producto fp = new formFabricante_Producto();
         //----------------------------------
         Connection connection = DAO.getConnection();
         FabricanteService fs = new FabricanteService();
