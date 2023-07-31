@@ -27,6 +27,7 @@ public class Libro {
     @Column(nullable = true)
     private Long ISBN;
     private String titulo;
+    private Integer anio;
     private Integer ejemplares;
     private Integer ejemplaresPrestados;
     private Integer ejemplaresRestantes;
@@ -39,15 +40,24 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(Long ISBN, String titulo, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) {
+    public Libro(Long ISBN, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, Boolean alta, Autor autor, Editorial editorial) {
         this.ISBN = ISBN;
         this.titulo = titulo;
+        this.anio = anio;
         this.ejemplares = ejemplares;
         this.ejemplaresPrestados = ejemplaresPrestados;
         this.ejemplaresRestantes = ejemplaresRestantes;
         this.alta = alta;
         this.autor = autor;
         this.editorial = editorial;
+    }
+
+    public Integer getAnio() {
+        return anio;
+    }
+
+    public void setAnio(Integer anio) {
+        this.anio = anio;
     }
 
     public Long getISBN() {

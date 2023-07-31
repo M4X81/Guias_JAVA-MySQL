@@ -1,7 +1,6 @@
 package libreria.JPA_DAO;
 
 import java.util.List;
-import javax.persistence.NoResultException;
 import libreria.entities.Autor;
 
 /**

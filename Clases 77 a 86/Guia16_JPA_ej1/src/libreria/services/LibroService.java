@@ -18,9 +18,9 @@ import libreria.entities.Libro;
 public class LibroService {
 
     Scanner input = new Scanner(System.in).useDelimiter("\n");
-    private Autor_DAO aDao;
-    private Editorial_DAO eDao;
-    private Libro_DAO lDao;
+    private final Autor_DAO aDao;
+    private final Editorial_DAO eDao;
+    private final Libro_DAO lDao;
 
     public LibroService() {
         aDao = new Autor_DAO();
@@ -32,25 +32,26 @@ public class LibroService {
     try {
         System.out.println("Ingrese el título del libro:");
         String titulo = input.nextLine();
+        System.out.println("Ingrese año de salida");
+        Integer anio = input.nextInt();
         System.out.println("Ingrese la cantidad total de ejemplares:");
         Integer ejemplares = input.nextInt();
         input.nextLine();
-        System.out.println("Ingrese la cantidad de ejemplares prestados:");
-        Integer ejemplaresPrestados = input.nextInt();
-        input.nextLine();
-        System.out.println("Ingrese la cantidad de ejemplares restantes:");
-        Integer ejemplaresRestantes = input.nextInt();
-        input.nextLine();
-        System.out.println("Ingrese 'true' si el libro está disponible o 'false' si está dado de baja:");
-        Boolean alta = input.nextBoolean();
-        input.nextLine(); // Limpio buffer
-
+//        System.out.println("Ingrese la cantidad de ejemplares prestados:");
+//        Integer ejemplaresPrestados = input.nextInt();
+//        input.nextLine();
+//        System.out.println("Ingrese la cantidad de ejemplares restantes:");
+//        Integer ejemplaresRestantes = input.nextInt();
+//        input.nextLine();
+//        System.out.println("Ingrese 'true' si el libro está disponible o 'false' si está dado de baja:");
+//        Boolean alta = input.nextBoolean();
+//        input.nextLine(); // Limpio buffer
         System.out.println("Ingrese el nombre del autor:");
         String nombreAutor = input.nextLine();
         System.out.println("Ingrese el nombre de la editorial:");
         String nombreEditorial = input.nextLine();
 
-        if (ejemplares < 0 || ejemplaresPrestados < 0 || ejemplaresRestantes < 0 || titulo.isEmpty() || nombreAutor.isEmpty() || nombreEditorial.isEmpty()) {
+        if (ejemplares < 0  || titulo.isEmpty() || nombreAutor.isEmpty() || nombreEditorial.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese datos válidos para el libro");
             return null;
         }
@@ -73,10 +74,11 @@ public class LibroService {
 
         Libro libro = new Libro();
         libro.setTitulo(titulo);
+        libro.setAnio(anio);
         libro.setEjemplares(ejemplares);
-        libro.setEjemplaresPrestados(ejemplaresPrestados);
-        libro.setEjemplaresRestantes(ejemplaresRestantes);
-        libro.setAlta(alta);
+        libro.setEjemplaresPrestados(0);
+        libro.setEjemplaresRestantes(ejemplares);
+        libro.setAlta(true);
         libro.setAutor(autor);
         libro.setEditorial(editorial);
 
@@ -100,14 +102,18 @@ public class LibroService {
             System.out.println("Ingrese el nuevo título del libro:");
             libro.setTitulo(input.nextLine());
 
+            System.out.println("Ingrese nuevo año de impresión");
+            libro.setAnio(input.nextInt());
+            
             System.out.println("Ingrese la nueva cantidad total de ejemplares:");
             libro.setEjemplares(input.nextInt());
 
-            System.out.println("Ingrese la nueva cantidad de ejemplares prestados:");
+            System.out.println("Ingrese la cantidad de ejemplares prestados:");
             libro.setEjemplaresPrestados(input.nextInt());
 
-            System.out.println("Ingrese la nueva cantidad de ejemplares restantes:");
-            libro.setEjemplaresRestantes(input.nextInt());
+            System.out.println("Cantidad de ejemplares restantes:");
+            libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
+            System.out.println(libro.getEjemplaresRestantes());
 
             System.out.println("Ingrese 'true' si el libro está disponible o 'false' si está dado de baja:");
             libro.setAlta(input.nextBoolean());

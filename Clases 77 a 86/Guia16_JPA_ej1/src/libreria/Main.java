@@ -1,22 +1,22 @@
 package libreria;
 
+import javax.swing.JOptionPane;
 import libreria.services.ServicioPrincipal;
-
 
 /**
  *
  * @author Max
  */
 public class Main {
+
     public static void main(String[] args) {
         try {
             ServicioPrincipal servicio = new ServicioPrincipal();
             servicio.menuGeneral();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "error de coneccion: " + e.toString());
         }
-    }
-    
+
 //        //esto es para probar conexion
 //        try {
 //             EntityManager em = Persistence.createEntityManagerFactory("Guia16_JPA_ej1PU").createEntityManager();
@@ -31,7 +31,5 @@ public class Main {
 //            }
 //        } catch (Exception e) {
 //        }
- 
     }
-  
-
+}
